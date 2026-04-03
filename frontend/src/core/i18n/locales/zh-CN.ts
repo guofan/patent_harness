@@ -1,4 +1,4 @@
-import {
+﻿import {
   CompassIcon,
   GraduationCapIcon,
   ImageIcon,
@@ -44,10 +44,17 @@ export const zhCN: Translations = {
     save: "保存",
     install: "安装",
     create: "创建",
+    import: "导入",
     export: "导出",
     exportAsMarkdown: "导出为 Markdown",
     exportAsJSON: "导出为 JSON",
     exportSuccess: "对话已导出",
+  },
+
+  // Home
+  home: {
+    docs: "文档",
+    blog: "博客",
   },
 
   // Welcome
@@ -182,9 +189,21 @@ export const zhCN: Translations = {
     nameStepContinue: "继续",
     nameStepInvalidError: "名称无效，只允许字母、数字和连字符",
     nameStepAlreadyExistsError: "已存在同名智能体",
+    nameStepNetworkError: "网络请求失败，请检查网络或后端连接",
     nameStepCheckError: "无法验证名称可用性，请稍后重试",
     nameStepBootstrapMessage:
       "新智能体的名称是 {name}，现在开始为它生成 **SOUL**。",
+    save: "保存智能体",
+    saving: "正在保存智能体...",
+    saveRequested:
+      "已提交保存请求，DeerFlow 正在根据当前对话生成并保存初版智能体。",
+    saveHint:
+      "你可以在右上角的菜单里随时保存这个智能体，就算目前还只是初稿也可以。",
+    saveCommandMessage:
+      "请现在根据我们目前已经讨论的全部内容保存这个自定义智能体。这就是我明确的保存确认。如果仍有少量细节缺失，请根据上下文做出合理假设，生成一份简洁的英文初始 SOUL.md，并直接调用 setup_agent，不要再向我索要额外确认。",
+    agentCreatedPendingRefresh:
+      "智能体已创建，但 DeerFlow 暂时还无法读取到它。请稍后刷新当前页面。",
+    more: "更多操作",
     agentCreated: "智能体已创建！",
     startChatting: "开始对话",
     backToGallery: "返回 Gallery",
@@ -299,6 +318,15 @@ export const zhCN: Translations = {
         "DeerFlow 会在后台不断从你的对话中自动学习。这些记忆能帮助 DeerFlow 更好地理解你，并提供更个性化的体验。",
       empty: "暂无可展示的记忆数据。",
       rawJson: "原始 JSON",
+      exportButton: "导出记忆",
+      exportSuccess: "记忆已导出",
+      importButton: "导入记忆",
+      importConfirmTitle: "导入记忆？",
+      importConfirmDescription: "这会用选中的 JSON 备份覆盖当前记忆。",
+      importFileLabel: "已选择文件",
+      importInvalidFile: "读取记忆文件失败，请选择有效的 JSON 导出文件。",
+      importSuccess: "记忆已导入",
+      manualFactSource: "手动添加",
       addFact: "添加事实",
       addFactTitle: "添加记忆事实",
       editFactTitle: "编辑记忆事实",
@@ -322,10 +350,9 @@ export const zhCN: Translations = {
       factSave: "保存事实",
       factValidationContent: "事实内容不能为空。",
       factValidationConfidence: "置信度必须是 0 到 1 之间的数字。",
-      manualFactSource: "手动添加",
       noFacts: "还没有保存的事实。",
       summaryReadOnly:
-        "摘要分区当前仍为只读。你可以在下方添加、编辑或删除事实，或清空全部记忆。",
+        "摘要分区当前仍为只读。现在你可以清空全部记忆或删除单条事实。",
       memoryFullyEmpty: "还没有保存任何记忆。",
       factPreviewLabel: "即将删除的事实",
       searchPlaceholder: "搜索记忆",

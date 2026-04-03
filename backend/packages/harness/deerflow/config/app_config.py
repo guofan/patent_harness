@@ -1,7 +1,7 @@
 import logging
 import os
 from pathlib import Path
-from typing import Any, Self
+from typing import Any, Literal, Self
 
 import yaml
 from dotenv import load_dotenv
@@ -15,6 +15,7 @@ from deerflow.config.memory_config import load_memory_config_from_dict
 from deerflow.config.model_config import ModelConfig
 from deerflow.config.sandbox_config import SandboxConfig
 from deerflow.config.skills_config import SkillsConfig
+from deerflow.config.stream_bridge_config import StreamBridgeConfig, load_stream_bridge_config_from_dict
 from deerflow.config.subagents_config import load_subagents_config_from_dict
 from deerflow.config.summarization_config import load_summarization_config_from_dict
 from deerflow.config.title_config import load_title_config_from_dict
@@ -27,11 +28,26 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 
+class UploadsConfig(BaseModel):
+    """Configuration for file upload handling."""
+
+    pdf_converter: Literal["auto", "pymupdf4llm", "markitdown"] = Field(
+        default="auto",
+        description=(
+            "PDF-to-Markdown converter. "
+            "'auto': prefer pymupdf4llm when installed, fall back to MarkItDown for image-based PDFs; "
+            "'pymupdf4llm': always use pymupdf4llm (must be installed); "
+            "'markitdown': always use MarkItDown (original behaviour)."
+        ),
+    )
+
+
 class AppConfig(BaseModel):
     """Config for the DeerFlow application"""
 
     log_level: str = Field(default="info", description="Logging level for deerflow modules (debug/info/warning/error)")
     token_usage: TokenUsageConfig = Field(default_factory=TokenUsageConfig, description="Token usage tracking configuration")
+    uploads: UploadsConfig = Field(default_factory=UploadsConfig, description="File upload handling configuration")
     models: list[ModelConfig] = Field(default_factory=list, description="Available models")
     sandbox: SandboxConfig = Field(description="Sandbox configuration")
     tools: list[ToolConfig] = Field(default_factory=list, description="Available tools")
@@ -41,6 +57,7 @@ class AppConfig(BaseModel):
     tool_search: ToolSearchConfig = Field(default_factory=ToolSearchConfig, description="Tool search / deferred loading configuration")
     model_config = ConfigDict(extra="allow", frozen=False)
     checkpointer: CheckpointerConfig | None = Field(default=None, description="Checkpointer configuration")
+    stream_bridge: StreamBridgeConfig | None = Field(default=None, description="Stream bridge configuration")
 
     @classmethod
     def resolve_config_path(cls, config_path: str | None = None) -> Path:
@@ -119,6 +136,10 @@ class AppConfig(BaseModel):
         # Load checkpointer config if present
         if "checkpointer" in config_data:
             load_checkpointer_config_from_dict(config_data["checkpointer"])
+
+        # Load stream bridge config if present
+        if "stream_bridge" in config_data:
+            load_stream_bridge_config_from_dict(config_data["stream_bridge"])
 
         # Always refresh ACP agent config so removed entries do not linger across reloads.
         load_acp_config_from_dict(config_data.get("acp_agents", {}))
