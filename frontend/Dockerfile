@@ -6,9 +6,11 @@
 ARG PNPM_STORE_PATH=/root/.local/share/pnpm/store
 
 # ── Base: shared setup ────────────────────────────────────────────────────────
-FROM node:22-alpine AS base
+FROM node:22 AS base
 ARG PNPM_STORE_PATH
 ARG NPM_REGISTRY
+# Install build dependencies for native modules (better-sqlite3)
+RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
 # Configure corepack registry before installing pnpm so the download itself
 # succeeds in restricted networks (COREPACK_NPM_REGISTRY controls where
 # corepack fetches package managers from).

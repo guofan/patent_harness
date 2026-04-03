@@ -92,6 +92,7 @@ services:
       - ../frontend/src:/app/frontend/src
       - ../frontend/public:/app/frontend/public
       - ../frontend/next.config.js:/app/frontend/next.config.js:ro
+      - ../frontend/data:/app/frontend/data
       - ../logs:/app/logs
       # Mount pnpm store for caching
       - ${PNPM_STORE_PATH:-~/.local/share/pnpm/store}:/root/.local/share/pnpm/store
@@ -100,6 +101,7 @@ services:
       - NODE_ENV=development
       - WATCHPACK_POLLING=true
       - CI=true
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET:-dev-secret-change-in-production}
     env_file:
       - ../frontend/.env
     networks:
