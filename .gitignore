@@ -28,6 +28,9 @@ config.yaml
 mcp_config.json
 extensions_config.json
 
+# Credentials
+.credentials/
+
 # IDE
 .idea/
 .vscode/

@@ -131,6 +131,8 @@ services:
       - ../extensions_config.json:/app/extensions_config.json
       - ../skills:/app/skills
       - ../logs:/app/logs
+      # Google Cloud credentials for Vertex AI
+      - ../.credentials:/app/.credentials:ro
       # Mount uv cache for faster dependency installation
       - ~/.cache/uv:/root/.cache/uv
       # DooD: same as gateway — AioSandboxProvider runs inside LangGraph process.
@@ -187,6 +189,8 @@ services:
       - ../extensions_config.json:/app/extensions_config.json
       - ../skills:/app/skills
       - ../logs:/app/logs
+      # Google Cloud credentials for Vertex AI
+      - ../.credentials:/app/.credentials:ro
       # Mount uv cache for faster dependency installation
       - ~/.cache/uv:/root/.cache/uv
       # DooD: same as gateway — AioSandboxProvider runs inside LangGraph process.
@@ -231,4 +235,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.200.0/24
+        - subnet: 192.168.201.0/24
